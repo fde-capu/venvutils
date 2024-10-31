@@ -1,10 +1,7 @@
-mydir=$(basename -- $0)
-echo "$mydir ,,<--"
-exit
-
+export VENVUTILS="$( dirname "${BASH_SOURCE[0]}" )"
 export PYVENV="__pyvenv__"
-alias venv="utils/create_venv.sh"
+alias venv="$VENVUTILS/create_venv.sh"
 alias deps="pip install -r requirements.txt"
 alias activate="venv && source $PYVENV/bin/activate && deps"
-alias re="utils/reset.sh"
-alias clean="utils/clean.sh"
+alias re="$VENVUTILS/reset.sh"
+alias clean="$VENVUTILS/clean.sh"

@@ -1,8 +1,35 @@
-export VENVUTILS="$( dirname "${BASH_SOURCE[0]}" )"
-export PYVENV="__pyvenv__"
-alias venv="$VENVUTILS/create_venv.sh"
-alias deps="pip install -r requirements.txt"
-alias activate="venv && source $PYVENV/bin/activate && deps"
-alias re="$VENVUTILS/reset.sh"
-alias clean="$VENVUTILS/clean.sh"
-alias build="activate && deactivate"
+#!/bin/bash
+
+DIRCHECK="$( dirname "${BASH_SOURCE[0]}" )"
+if [[ "$DIRCHECK" == "." ]]; then
+  cd .. && source venvutils/source.me || (
+    echo "Something went wrong."
+    echo "Is venvutils a subdirectory from the project?"
+  )
+  return
+fi
+
+echo "These dependencies are required:"
+cat requirements.txt
+echo -ne "Do you want to install them system-wide?
+You won't need to activate a virtual environment before launching Vim.
+However, this will use 'pip install --break-system-packages',
+so do it at your own risk!
+[y/N] " && read answer
+[[ "$answer" != "${answer#[Yy]}" ]] && globally="true" || globally=""
+if [[ ! -z "$globally" ]]; then
+  echo "Install globally."
+else
+  export VENVUTILS="$( dirname "${BASH_SOURCE[0]}" )"
+  cat $VENVUTILS/README.md
+  export PYVENV="__pyvenv__"
+  alias venv="$VENVUTILS/create_venv.sh"
+  alias deps="pip install -r requirements.txt"
+  alias activate="venv && source $PYVENV/bin/activate && deps"
+  alias re="$VENVUTILS/reset.sh"
+  alias clean="$VENVUTILS/clean.sh"
+  alias build="activate && deactivate"
+fi
+return
+
+

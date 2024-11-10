@@ -1,0 +1,1 @@
+unalias venv deps activate re clean build deactivate

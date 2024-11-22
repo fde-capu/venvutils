@@ -1,13 +1,14 @@
 # venvutils
 ## Automated set up for Python3 virtual environment and dependencies
 
-After `source venvutils/source.me` finishes, one will do:
+Mus be a subdirectory or a submodule from the Python3 repository.
+After `source venvutils/source.me` finishes, do:
 
 `activate`
 ..._stuff_...
 `deactivate`
 
-The above is all one needs.
+The above is all that is needed.
 Extra commands:
 
 `venv` creates the virtual environment.
@@ -16,6 +17,5 @@ Extra commands:
 `deactivate` is what it states, however, one must manually
   run `source venvutils/unalias.rc` if they will.
 `build` sets up but does not activate.
-
-Directory name `__pyvenv__` is a fixed name of choice.
 `re`, `clean` or `reset` affect `__pyvenv__` and `__pycache__` as well.
+Directory name `__pyvenv__` is a fixed name of choice.

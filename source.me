@@ -9,27 +9,15 @@ if [[ "$DIRCHECK" == "." ]]; then
   return
 fi
 
-echo "These dependencies are required:"
-cat requirements.txt
-echo -ne "Do you want to install them system-wide?
-You won't need to activate a virtual environment before launching Vim.
-However, this will use 'pip install --break-system-packages',
-so do it at your own risk!
-[y/N] " && read answer
-[[ "$answer" != "${answer#[Yy]}" ]] && globally="true" || globally=""
-if [[ ! -z "$globally" ]]; then
-  echo "Install globally."
-else
-  export VENVUTILS="$( dirname "${BASH_SOURCE[0]}" )"
-  cat $VENVUTILS/README.md
-  export PYVENV="__pyvenv__"
-  alias venv="$VENVUTILS/create_venv.sh"
-  alias deps="pip install -r requirements.txt"
-  alias activate="venv && source $PYVENV/bin/activate && deps"
-  alias re="$VENVUTILS/reset.sh"
-  alias clean="$VENVUTILS/clean.sh"
-  alias build="activate && deactivate"
-fi
-return
+export VENVUTILS="$( dirname "${BASH_SOURCE[0]}" )"
+export PYVENV="__pyvenv__"
+alias venv="$VENVUTILS/create_venv.sh"
+alias deps="$VENVUTILS/deps.sh"
+alias activate="venv && source $PYVENV/bin/activate && deps"
+alias re="$VENVUTILS/reset.sh"
+alias clean="$VENVUTILS/clean.sh"
+alias build="activate && deactivate"
 
-
+echo
+cat $VENVUTILS/README.md
+echo
